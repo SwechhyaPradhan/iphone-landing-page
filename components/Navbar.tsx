@@ -50,8 +50,12 @@ const Navbar = () => {
           <ul className="space-y-4 text-gray-700 font-medium text-center">
             {navLinks.map((link,index) => (
               <li key={link.id}>
-                <a href="#" className="block hover:text-black transition">
-                  {link.id}
+                <a 
+                  key={link.id}
+                  href={`#${link.id}`}
+                  className="text-gray-700 hover:text-black font-medium transition "
+                >
+                  {link.label}
                 </a>
               </li>
             ))}

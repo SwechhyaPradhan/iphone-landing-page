@@ -3,7 +3,7 @@ import { Feature } from '@/lib/types'
 
 const Features = ({id, icon, title, description}: Feature) => {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10 ">
+    <section className="max-w-7xl mx-auto px-4 md:py-10 py-4 ">
 
       {/* Heading */}
       

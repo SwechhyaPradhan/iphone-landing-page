@@ -69,10 +69,10 @@ const EmailDetails = () => {
   }
 
   return (
-    <section id= '4' className="flex flex-col md:flex-row gap-10 mb-20 mt-20 bg-[#f0f0f2]  p-8 pb-0 rounded-3xl shadow-2xl border-gray-300 border">
+    <section id= '4' className="flex flex-col md:flex-row gap-10 mb-20 md:mb-0 md:mt-0 mt-5 bg-[#f0f0f2]  p-8 md:p-0 pb-0 rounded-3xl shadow-2xl border-gray-300 border">
       <Toaster position="top-center" reverseOrder={false} /> {/* ✅ Toast renderer */}
 
-      <div className="text-black flex-1 space-y-6 md:mb-0">
+      <div className="text-black flex-1 space-y-6 md:mb-0 p-16">
         <h2 className="md:text-5xl font-medium sm:text-3xl">Contact with Us</h2>
         
 
@@ -132,13 +132,13 @@ const EmailDetails = () => {
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex ">
         <Image
-          src={'/offer.png'}
+          src={'/contact.jpg'}
           alt="hero"
           width={1000}
           height={1000}
-          className="w-full h-auto max-w-md md:max-w-full"
+          className="w-full max-w-md md:max-w-full"
         />
       </div>
     </section>

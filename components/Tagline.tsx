@@ -6,7 +6,7 @@ const Tagline = ({ title, description}: HeadingList) => {
     <div  className="text-center">
 
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">{title}</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">{description}</p>
+        <p className="text-gray-600 md:max-w-lg text-sm  md:text-lg mx-5 md:mx-auto sm:mx-auto">{description}</p>
       
     </div>
   )

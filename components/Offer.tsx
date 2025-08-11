@@ -12,16 +12,16 @@ const Offer = () => {
     <p className="text-gray-600 w-full">Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.</p>
 
     {/* Countdown Box */}
-    <div className='flex flex-col md:flex-row  gap-3 mb-10'>
-      <div className='bg-[#e6e7e6] rounded-xl text-center p-6 sm:p-7 w-20 sm:w-24'>
+    <div className='flex flex-col  md:flex-row  gap-3 mb-10'>
+      <div className='bg-[#e6e7e6] rounded-xl text-center  p-2 sm:p-7 sm:w-28 w-80'>
         <p className='text-2xl sm:text-3xl'>18</p>
         <p className='text-sm'>Hour</p>
       </div>
-      <div className='bg-[#e6e7e6] rounded-xl text-center p-6 sm:p-7 w-20 sm:w-24'>
+      <div className='bg-[#e6e7e6] rounded-xl text-center p-2 sm:p-7  sm:w-28 w-80'>
         <p className='text-2xl sm:text-3xl'>15</p>
         <p className='text-sm'>Mins</p>
       </div>
-      <div className='bg-[#e6e7e6] rounded-xl text-center p-6 sm:p-7 w-20 sm:w-24'>
+      <div className='bg-[#e6e7e6] rounded-xl text-center p-2 sm:p-7 sm:w-28 w-80'>
         <p className='text-2xl sm:text-3xl'>10</p>
         <p className='text-sm'>Secs</p>
       </div>

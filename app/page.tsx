@@ -18,11 +18,11 @@ const page = () => {
   return (
     <>
 
-      <Hero image='/iphone.jpg' title='Welcome to Tech Haven' desc='Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.' btn='Shop Now'/>
+      <Hero image='/iphone.jpg' title='Welcome to Tech Haven' desc='Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.'/>
      
-    <section className='mx-20'>
+    <section className='md:mx-20'>
 
-    <div className="flex flex-col md:flex-row gap-10 mb-30">
+    <div className="flex flex-col md:flex-row md:gap-10 md:mb-30 mb-10">
         {data.map((d,id) => (
           <Card key={id} image={d.image}  title= {d.title} desc={d.desc} />
         ))}
@@ -39,7 +39,7 @@ const page = () => {
       <Offer/>
       
       <Tagline title="Our Products" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magn."/>
-      <div className="grid grid-cols-1 md:grid-cols-3 mb-30 ">
+      <div className="grid grid-cols-1 md:grid-cols-3 md:mb-30 mb-10 ">
         {features.map((f, id) => (
           <Features key={id} id={f.id} icon={f.icon} title={f.title} description={f.description}/>
         ))}
@@ -47,7 +47,7 @@ const page = () => {
 
      
       <Tagline title="Read With US" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magn."/>
-      <div  className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-30">
+      <div  className="grid grid-cols-1 md:grid-cols-3 gap-6 md:mb-30">
         {featureDetails.map((fd, id) => (
           <FeatureDetails key={id} id={fd.id} image={fd.image} title={fd.title} description={fd.description} date={fd.date}/>
         ))}
