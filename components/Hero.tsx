@@ -4,7 +4,7 @@ import {CardTypes} from '@/lib/types'
 
 const Hero = ({image, title, desc}: CardTypes) => {
   return (
-    <section className='relative md:mx-10 w-full'>
+    <section className='relative md:mx-10 '>
       <Image src={image} alt='hero' width={1000} height={1000}   className="w-full min-h-[600px] object-cover md:h-auto rounded-2xl mt-0"
  />
       <div className='absolute  text-black bottom-0 left-0 px-8 flex w-full justify-between items-center pb-10 '>

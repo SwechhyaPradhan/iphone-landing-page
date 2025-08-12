@@ -10,8 +10,8 @@ const Navbar = () => {
   const navLinks = [{id:1, label:"Products"}, {id: 2, label:"About Us"}, {id:3, label:"Blog"}, {id:4, label:"Contact Us"}];
 
   return (
-    <header className="w-full sticky top-0 z-50  flex justify-center mt-4 px-2 ">
-      <div className="w-full max-w-[1200px] bg-white rounded-3xl shadow-md px-6 py-4 flex items-center justify-between">
+    <header className=" sticky top-0 z-50 md:mx-10 mb-10 flex justify-center mt-4 px-2 ">
+      <div className="w-full  bg-white rounded-3xl shadow-md px-6 py-4 flex items-center justify-between">
         {/* Left - Logo */}
         <Link href="/">
         <h4 className="text-black">E-Product</h4>

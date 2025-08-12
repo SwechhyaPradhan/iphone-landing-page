@@ -4,7 +4,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-black py-10  md:px-20 p-4">
+    <footer className="bg-white text-black py-10  mt-10 md:px-20 p-4">
         <div className='max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between  md:items-start '>
             {/*Left side logo + paragraph */}
             <div className='space-y-5 '>
@@ -24,11 +24,20 @@ const Footer = () => {
                         <li>Products</li>
                         <li>Contact</li>
                         <li>Why us</li>
+                        <li>Blog</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 className='font-semibold text-lg mb-4'>Social media</h4>
+                    <ul className='text-gray-700 space-y-1'>
+                        <li>Instagram</li>
+                        <li>Facebook</li>
+                        <li>Linked in</li>
                         <li>Twitter</li>
                     </ul>
                 </div>
                 <div>
-                    <h4 className='font-semibold text-lg mb-4'>COMPANY</h4>
+                    <h4 className='font-semibold text-lg mb-4'>Webflow stuff</h4>
                     <ul className='text-gray-700 space-y-1'>
                         <li>Products</li>
                         <li>Contact</li>
@@ -39,19 +48,10 @@ const Footer = () => {
                 <div>
                     <h4 className='font-semibold text-lg mb-4'>COMPANY</h4>
                     <ul className='text-gray-700 space-y-1'>
-                        <li>Products</li>
-                        <li>Contact</li>
-                        <li>Why us</li>
-                        <li>Twitter</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 className='font-semibold text-lg mb-4'>COMPANY</h4>
-                    <ul className='text-gray-700 space-y-1'>
-                        <li>Products</li>
-                        <li>Contact</li>
-                        <li>Why us</li>
-                        <li>Twitter</li>
+                        <li>Style Guide</li>
+                        <li>Licensing</li>
+                        <li>Instructions</li>
+                        <li>Change Log</li>
                     </ul>
                 </div>
             </div>

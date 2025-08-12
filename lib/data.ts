@@ -3,7 +3,7 @@
 export const data = [
     {
       id: 1,
-      image: '/girl.png',
+      image: '/featurelist_1.jpg',
       title: "Welcome to Tech Haven",
       desc:'Lorem ipsum dolor sit amet consectetur adipiscing',
       btn:'Shop now'
