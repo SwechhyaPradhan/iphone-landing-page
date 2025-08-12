@@ -45,15 +45,7 @@ const Footer = () => {
                         <li>Twitter</li>
                     </ul>
                 </div>
-                <div>
-                    <h4 className='font-semibold text-lg mb-4'>COMPANY</h4>
-                    <ul className='text-gray-700 space-y-1'>
-                        <li>Style Guide</li>
-                        <li>Licensing</li>
-                        <li>Instructions</li>
-                        <li>Change Log</li>
-                    </ul>
-                </div>
+                
             </div>
         </div>
 
