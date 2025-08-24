@@ -1,3 +1,4 @@
+'use client'
 import Card from '@/components/Card'
 import Hero from '@/components/Hero'
 import Offer from '@/components/Offer'
@@ -13,9 +14,37 @@ import EmailDetails from '@/components/EmailDetails'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import Tagline from '@/components/Tagline'
+import { useEffect, useState } from "react";
+import { db } from '@/firebase';
+import { collection, getDocs } from "firebase/firestore";
 
+type Product = {
+  id: string;
+  title: string;
+  purpose: string;
+  originalPrice: number;
+  discountPrice: number;
+  image?: string;
+};
 const page = () => {
-  return (
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "products"));
+        const items = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...(doc.data() as Omit<Product, "id">)
+        }));
+        setProducts(items);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      }
+    };
+
+    fetchProducts();
+  }, []);  return (
     <>
 
       <Hero image='/iphone.jpg' title='Welcome to Tech Haven' desc='Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.'/>
@@ -32,10 +61,24 @@ const page = () => {
     
      
       <div className="grid grid-cols-1 md:grid-cols-3 mb-30">
-        {product.map((p, id) => (
-          <ProductCard  key={id} id={p.id} image={p.image} purpose={p.purpose} title= {p.title} discount_price={p.discount_price} original_price={p.original_price}/>
-        ))}
+      {products.length === 0 ? (
+          <p>No products found.</p>
+        ) : (
+          products.map((p) => (
+            <ProductCard
+              key={p.id}
+              id={p.id}
+              image={p.image || "/placeholder.png"}
+              purpose={p.purpose}
+              title={p.title}
+              discount_price={p.discountPrice.toString()}
+              original_price={p.originalPrice.toString()}
+            />
+          ))
+        )}
       </div>
+
+      
       <Offer/>
       
       <Tagline title="Our Products" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magn."/>

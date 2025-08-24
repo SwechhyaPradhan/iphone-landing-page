@@ -7,7 +7,7 @@
   }
 
 export interface ProductList{
-  id: number;
+  id: string;
   image: string;
   purpose: string; 
   title: string; 
