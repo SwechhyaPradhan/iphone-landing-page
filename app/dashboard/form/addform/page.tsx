@@ -1,24 +1,50 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { db } from "@/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Editor } from "@tinymce/tinymce-react";
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import MenuBar from './menu-bar';
+import Heading from "@tiptap/extension-heading";
+import TextAlign from "@tiptap/extension-text-align";
+import Highlight from "@tiptap/extension-highlight";
 
 const AddFormPage = () => {
-  const editorRef = useRef<any>(null);
-
   const [title, setTitle] = useState("");
   const [originalPrice, setOriginalPrice] = useState("");
   const [discountPrice, setDiscountPrice] = useState("");
   const [purpose, setPurpose] = useState("");
   const [image, setImage] = useState<File | null>(null);
-  const [description, setDescription] = useState("");
 
-  // Upload image to Cloudinary
+  // ✅ Editor for short description
+  const descriptionEditor = useEditor({
+    extensions: [
+      StarterKit.configure({ heading: false }),
+      Heading.configure({ levels: [1, 2, 3] }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Highlight,
+    ],
+    content: "<p>Write product description...</p>",
+    immediatelyRender: false,
+  });
+
+  // ✅ Editor for detailed description
+  const detailEditor = useEditor({
+    extensions: [
+      StarterKit.configure({ heading: false }),
+      Heading.configure({ levels: [1, 2, 3] }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Highlight,
+    ],
+    content: "<p>Write detailed description...</p>",
+    immediatelyRender: false,
+  });
+
+  // ✅ Upload image to Cloudinary
   const uploadImage = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -34,18 +60,20 @@ const AddFormPage = () => {
     return data.secure_url;
   };
 
+  // ✅ Reset form after submit
   const resetForm = () => {
     setTitle("");
     setOriginalPrice("");
     setDiscountPrice("");
     setPurpose("");
     setImage(null);
-    setDescription("");
+    descriptionEditor?.commands.setContent('');
+    detailEditor?.commands.setContent('');
   };
 
+  // ✅ Handle submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!image) return alert("Please select an image");
 
     try {
@@ -57,7 +85,8 @@ const AddFormPage = () => {
         discountPrice: Number(discountPrice),
         purpose,
         image: imageUrl,
-        description,
+        description: descriptionEditor?.getHTML() || "", // short description
+        detailDescription: detailEditor?.getHTML() || "", // long description
         createdAt: new Date(),
       });
 
@@ -75,7 +104,7 @@ const AddFormPage = () => {
         <Button>Add Product</Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add New Product</DialogTitle>
         </DialogHeader>
@@ -114,26 +143,23 @@ const AddFormPage = () => {
             required
           />
 
-          <Editor
-            apiKey="oulh0jfjiyaz52kkcwb789y4rmqd5a16cy3ues1mo2bd07wr"
-            onInit={(_evt, editor) => (editorRef.current = editor)}
-            initialValue="<p>Start writing here...</p>"
-            init={{
-              height: 400,
-              menubar: true,
-              plugins: [
-                "advlist", "autolink", "lists", "link", "image", "charmap",
-                "preview", "anchor", "searchreplace", "visualblocks", "code",
-                "fullscreen", "insertdatetime", "media", "table", "help", "wordcount"
-              ],
-              toolbar:
-                "undo redo | blocks | bold italic forecolor | alignleft aligncenter " +
-                "alignright alignjustify | bullist numlist outdent indent | removeformat | help",
-              content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-            }}
-            value={description}
-            onEditorChange={(content) => setDescription(content)}
-          />
+          {/* ✅ Short Description */}
+          {descriptionEditor && (
+            <div>
+              <label className="font-medium">Description</label>
+              <MenuBar editor={descriptionEditor} />
+              <EditorContent editor={descriptionEditor} className="border p-2 rounded" />
+            </div>
+          )}
+
+          {/* ✅ Detailed Description */}
+          {detailEditor && (
+            <div>
+              <label className="font-medium">Detailed Description</label>
+              <MenuBar editor={detailEditor} />
+              <EditorContent editor={detailEditor} className="border p-2 rounded" />
+            </div>
+          )}
 
           <Button type="submit">Submit</Button>
         </form>
