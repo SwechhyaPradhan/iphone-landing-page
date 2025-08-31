@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { db } from "@/firebase";
 import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -8,39 +8,34 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import MenuBar from './menu-bar';
 import Heading from "@tiptap/extension-heading";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import toast from 'react-hot-toast';
+import MenuBar from '@/app/dashboard/form/addform/menu-bar'; // default export assumed
 
-
-type Product = {
+type Post = {
   id?: string;
-  title: string;
-  originalPrice: number;
-  discountPrice: number;
-  purpose: string;
-  image: string;
+  title?: string;
   description?: string;
   detailDescription?: string;
+  date?: string;
+  image?: string;
 };
 
-type AddFormPageProps = {
-  productToEdit?: Product | null;
+type AddPostPageProps = {
+  postToEdit?: Post | null;
   onClose?: () => void;
 };
 
-const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
-  const [title, setTitle] = useState(productToEdit?.title || "");
-  const [originalPrice, setOriginalPrice] = useState(productToEdit?.originalPrice.toString() || "");
-  const [discountPrice, setDiscountPrice] = useState(productToEdit?.discountPrice.toString() || "");
-  const [purpose, setPurpose] = useState(productToEdit?.purpose || "");
+const AddPostPage = ({ postToEdit, onClose }: AddPostPageProps) => {
+  const [title, setTitle] = useState(postToEdit?.title || "");
+  const [date, setDate] = useState(postToEdit?.date || "");
   const [image, setImage] = useState<File | null>(null);
 
-  // Tiptap editors
+  // TipTap editors
   const descriptionEditor = useEditor({
-    content: productToEdit?.description || "<p>Write product description...</p>",
+    content: postToEdit?.description || "<p>Write short description...</p>",
     extensions: [
       StarterKit.configure({ heading: false }),
       Heading.configure({ levels: [1, 2, 3] }),
@@ -51,7 +46,7 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
   });
 
   const detailEditor = useEditor({
-    content: productToEdit?.detailDescription || "<p>Write detailed description...</p>",
+    content: postToEdit?.detailDescription || "<p>Write detailed description...</p>",
     extensions: [
       StarterKit.configure({ heading: false }),
       Heading.configure({ levels: [1, 2, 3] }),
@@ -80,12 +75,10 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
   // Reset form
   const resetForm = () => {
     setTitle("");
-    setOriginalPrice("");
-    setDiscountPrice("");
-    setPurpose("");
+    setDate("");
     setImage(null);
-    descriptionEditor?.commands.setContent('');
-    detailEditor?.commands.setContent('');
+    descriptionEditor?.commands.setContent("<p></p>");
+    detailEditor?.commands.setContent("<p></p>");
   };
 
   // Handle submit
@@ -93,91 +86,73 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
     e.preventDefault();
 
     try {
-      let imageUrl = productToEdit?.image || "";
-
+      let imageUrl = postToEdit?.image || "";
       if (image) {
         imageUrl = await uploadImage(image);
       }
-      if (productToEdit?.id) {
-        // Update existing product
-        await updateDoc(doc(db, "products", productToEdit.id), {
+
+      if (postToEdit?.id) {
+        // Update existing post
+        await updateDoc(doc(db, "features", postToEdit.id), {
           title,
-          originalPrice: Number(originalPrice),
-          discountPrice: Number(discountPrice),
-          purpose,
+          date,
           image: imageUrl,
           description: descriptionEditor?.getHTML() || "",
           detailDescription: detailEditor?.getHTML() || "",
         });
-        toast.success("Product updated successfully!");
+        toast.success("Post updated successfully!");
       } else {
-        // Add new product
-        await addDoc(collection(db, "products"), {
+        // Add new post
+        await addDoc(collection(db, "features"), {
           title,
-          originalPrice: Number(originalPrice),
-          discountPrice: Number(discountPrice),
-          purpose,
+          date,
           image: imageUrl,
           description: descriptionEditor?.getHTML() || "",
           detailDescription: detailEditor?.getHTML() || "",
           createdAt: new Date(),
         });
-        toast.success("Product added successfully!");
+        toast.success("Post added successfully!");
       }
-      
 
       resetForm();
       onClose?.();
     } catch (error) {
-      console.error("Error submitting product:", error);
-      alert("Something went wrong!");
+      console.error("Error submitting post:", error);
+      toast.error("Something went wrong!");
     }
   };
 
   return (
-    <Dialog open={!!productToEdit || undefined} onOpenChange={onClose}>
+    <Dialog open={!!postToEdit || undefined} onOpenChange={onClose}>
       <DialogTrigger asChild>
-        {!productToEdit && <Button>Add Product</Button>}
+        {!postToEdit && <Button>Add Post</Button>}
       </DialogTrigger>
 
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{productToEdit ? "Edit Product" : "Add New Product"}</DialogTitle>
+          <DialogTitle>{postToEdit ? "Edit Post" : "Add New Post"}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
-            placeholder="Product Title"
+            placeholder="Post Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
+
           <Input
-            type="number"
-            placeholder="Original Price"
-            value={originalPrice}
-            onChange={(e) => setOriginalPrice(e.target.value)}
-            required
-          />
-          <Input
-            type="number"
-            placeholder="Discounted Price"
-            value={discountPrice}
-            onChange={(e) => setDiscountPrice(e.target.value)}
-            required
-          />
-          <Input
-            placeholder="Purpose (e.g. home, decor, etc.)"
-            value={purpose}
-            onChange={(e) => setPurpose(e.target.value)}
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
             required
           />
 
           {/* Old Image Preview */}
-          {productToEdit?.image && !image && (
+          {postToEdit?.image && !image && (
             <div className="mb-2">
               <p className="font-medium">Current Image:</p>
-              <img src={productToEdit.image} alt="Current Product" className="w-40 h-40 object-cover rounded" />
+              <img src={postToEdit.image} alt="Current Post" className="w-40 h-40 object-cover rounded" />
             </div>
           )}
 
@@ -198,7 +173,7 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
           {/* Short Description */}
           {descriptionEditor && (
             <div>
-              <label className="font-medium">Description</label>
+              <label className="font-medium">Short Description</label>
               <MenuBar editor={descriptionEditor} />
               <EditorContent editor={descriptionEditor} className="border p-2 rounded" />
             </div>
@@ -213,11 +188,11 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
             </div>
           )}
 
-          <Button type="submit">{productToEdit ? "Update Product" : "Add Product"}</Button>
+          <Button type="submit">{postToEdit ? "Update Post" : "Add Post"}</Button>
         </form>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default AddFormPage;
+export default AddPostPage;

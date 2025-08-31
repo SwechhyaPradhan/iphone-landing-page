@@ -5,7 +5,9 @@ import { collection, getDocs } from 'firebase/firestore'
 
 import React, { useEffect, useState } from 'react'
 // import Sidebar from './sidebar/page'
-
+import { auth } from '@/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
+import { useRouter } from 'next/navigation'
 
 type Contact = {
   id: string
@@ -25,10 +27,25 @@ type Booking = {
 }
 
 const DashboardPage = () => {
+  const router = useRouter()
   const [contacts, setContacts] = useState<Contact[]>([])
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        router.push('/login') // redirect if not logged in
+      } else {
+        setUser(currentUser)
+      }
+      setLoading(false)
+    })
+
+    return () => unsubscribe()
+  }, [router])
 
   useEffect(() => {
     const fetchData = async () => {

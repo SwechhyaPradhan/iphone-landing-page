@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from 'react-hot-toast';
+
 
 import Sidebar from "./sidebar/page";
 
@@ -35,7 +37,16 @@ export default function RootLayout({
   
             {/* Main content on the right */}
             <main className="flex-1">{children}</main>
+          
           </div>
+          <Toaster 
+    position="top-center"
+    reverseOrder={false}
+    toastOptions={{
+      duration: 2000,
+      style: { background: '#333', color: '#fff' },
+    }}
+  />
         </body>
       </html>
     );

@@ -7,7 +7,7 @@ import Link from "next/link";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navLinks = [{id:1, label:"Products"}, {id: 2, label:"About Us"}, {id:3, label:"Blog"}, {id:4, label:"Contact Us"}];
+  const navLinks = [{id:"products", label:"Products"}, {id: "features", label:"About Us"}, {id:"blog", label:"Blog"}, {id:4, label:"Contact Us"}];
 
   return (
     <header className=" sticky top-0 z-50 md:mx-10 mb-10 flex justify-center mt-4 px-2 ">
@@ -22,7 +22,7 @@ const Navbar = () => {
           {navLinks.map((link,index) => (
             <a
               key={link.id}
-              href={`#${link.id}`}
+              href={`/#${link.id}`}
               className="text-gray-700 hover:text-black font-medium transition "
             >
               {link.label}
