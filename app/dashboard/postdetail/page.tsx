@@ -1,6 +1,6 @@
 import React from 'react'
 import AddPostPage from './addpostdetail/page'
-import ShowPostPage from './showpostdetail/page'
+import ShowPostPage from './showform/page'
 
 
 const page = () => {

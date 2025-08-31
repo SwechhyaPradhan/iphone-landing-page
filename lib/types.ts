@@ -29,7 +29,7 @@ export interface Feature {
 }
 
 export interface FeatureList {
-  id: number;
+  id: string;
   image: string;
   title: string;
   description: string;

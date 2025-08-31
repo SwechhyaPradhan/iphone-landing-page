@@ -24,8 +24,8 @@ const ProductCard = ({id, image, purpose, title, discount_price, original_price}
         <h3 className="text-xl font-semibold text-black">{title}</h3>
 
         <div className="flex gap-4 ">
-        <p className="text-black text-lg font-sans">{discount_price}</p>
-        <p className="text-[#4E4B51] text-lg line-through font-sans">{original_price}</p>
+        <p className="text-black text-lg font-sans">$ {discount_price} USD</p>
+        <p className="text-[#4E4B51] text-lg line-through font-sans">$ {original_price} USD</p>
         </div> 
     </section>
   )
