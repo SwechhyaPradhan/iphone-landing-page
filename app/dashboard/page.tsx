@@ -33,7 +33,6 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [user, setUser] = useState<any>(null)
-  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -76,7 +75,7 @@ const DashboardPage = () => {
 
     fetchData()
   }, [])
-
+  console.log(user)
   if (loading) return <div>Loading data...</div>
   if (error) return <div>{error}</div>
 

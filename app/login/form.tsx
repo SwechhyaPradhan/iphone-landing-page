@@ -14,15 +14,14 @@ const FormPage = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
-
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       console.log('Logged in user:', userCredential.user)
       router.push('/dashboard') // redirect after login
-    } catch (err: any) {
+    } catch (err:any) { // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setError(err.message)
     }
   }

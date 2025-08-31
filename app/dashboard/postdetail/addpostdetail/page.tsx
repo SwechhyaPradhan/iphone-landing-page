@@ -13,6 +13,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import toast from 'react-hot-toast';
 import MenuBar from '@/app/dashboard/form/addform/menu-bar'; // default export assumed
+import Image from 'next/image';
 
 type Post = {
   id?: string;
@@ -152,7 +153,7 @@ const AddPostPage = ({ postToEdit, onClose }: AddPostPageProps) => {
           {postToEdit?.image && !image && (
             <div className="mb-2">
               <p className="font-medium">Current Image:</p>
-              <img src={postToEdit.image} alt="Current Post" className="w-40 h-40 object-cover rounded" />
+              <Image src={postToEdit.image} alt="Current Post"  width={1000} height={1000} className="w-40 h-40 object-cover rounded" />
             </div>
           )}
 
@@ -160,7 +161,7 @@ const AddPostPage = ({ postToEdit, onClose }: AddPostPageProps) => {
           {image && (
             <div className="mb-2">
               <p className="font-medium">Selected Image Preview:</p>
-              <img src={URL.createObjectURL(image)} alt="New Preview" className="w-40 h-40 object-cover rounded" />
+              <Image src={URL.createObjectURL(image)} alt="New Preview" width={1000} height={1000} className="w-40 h-40 object-cover rounded" />
             </div>
           )}
 

@@ -6,6 +6,7 @@ import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import AddFormPage from "@/app/dashboard/form/addform/page";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 type Product = {
   id: string;
@@ -71,7 +72,7 @@ const ProductTable = () => {
           {products.map((p) => (
             <TableRow key={p.id}>
               <TableCell>
-                <img src={p.image} alt={p.title} width={80} className="rounded" />
+                <Image src={p.image} alt={p.title} width={80} height={1000}className="rounded" />
               </TableCell>
               <TableCell>{p.title}</TableCell>
               <TableCell>${p.originalPrice}</TableCell>

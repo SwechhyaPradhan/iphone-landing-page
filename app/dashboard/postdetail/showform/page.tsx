@@ -6,6 +6,7 @@ import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import AddPostPage from "@/app/dashboard/postdetail/addpostdetail/page"; // your AddPostPage component
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 type Post = {
   id: string;
@@ -65,7 +66,7 @@ const PostTable = () => {
           {posts.map((p) => (
             <TableRow key={p.id}>
               <TableCell>
-                {p.image && <img src={p.image} alt={p.title} width={80} className="rounded" />}
+                {p.image && <Image src={p.image} alt={p.title} width={1000} height={1000} className="rounded" />}
               </TableCell>
               <TableCell>{p.title}</TableCell>
               <TableCell>{p.date}</TableCell>

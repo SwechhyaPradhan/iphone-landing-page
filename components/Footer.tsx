@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import React from 'react'
 
 
@@ -8,13 +7,9 @@ const Footer = () => {
         <div className='max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between  md:items-start '>
             {/*Left side logo + paragraph */}
             <div className='space-y-5 '>
-                
-                   <h2>E-product</h2>
-                
+                <h2>E-product</h2>
                 <h2 className='md:text-3xl font-bold w-80 sm:text-lg mb-5'>Even more reason to shop with us </h2>
             </div>
-
-          
 
             {/*Right side logo + paragraph */}
             <div className="flex flex-col  sm:flex-row md:space-x-16 space-y-8 ">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { db } from "@/firebase";
 import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -13,6 +13,7 @@ import Heading from "@tiptap/extension-heading";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 
 type Product = {
@@ -31,7 +32,7 @@ type AddFormPageProps = {
   onClose?: () => void;
 };
 
-const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
+const Page = ({ productToEdit, onClose }: AddFormPageProps) => {
   const [title, setTitle] = useState(productToEdit?.title || "");
   const [originalPrice, setOriginalPrice] = useState(productToEdit?.originalPrice.toString() || "");
   const [discountPrice, setDiscountPrice] = useState(productToEdit?.discountPrice.toString() || "");
@@ -177,7 +178,7 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
           {productToEdit?.image && !image && (
             <div className="mb-2">
               <p className="font-medium">Current Image:</p>
-              <img src={productToEdit.image} alt="Current Product" className="w-40 h-40 object-cover rounded" />
+              <Image src={productToEdit.image} alt="Current Product" width={1000} height={1000} className="w-40 h-40 object-cover rounded" />
             </div>
           )}
 
@@ -185,7 +186,7 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
           {image && (
             <div className="mb-2">
               <p className="font-medium">Selected Image Preview:</p>
-              <img src={URL.createObjectURL(image)} alt="New Preview" className="w-40 h-40 object-cover rounded" />
+              <Image src={URL.createObjectURL(image)} alt="New Preview" width={1000} height={1000} className="w-40 h-40 object-cover rounded" />
             </div>
           )}
 
@@ -220,4 +221,4 @@ const AddFormPage = ({ productToEdit, onClose }: AddFormPageProps) => {
   );
 };
 
-export default AddFormPage;
+export default Page;

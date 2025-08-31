@@ -4,15 +4,11 @@ import Hero from '@/components/Hero'
 import Offer from '@/components/Offer'
 import ProductCard from '@/components/ProductCard'
 import React from 'react'
-import {data, product} from "@/lib/data"
+import {data} from "@/lib/data"
 import { features } from '@/lib/featuresData'
 import Features from '@/components/Features'
 import FeatureDetails from '@/components/FeatureDetails'
-import { HeadingDetails } from '@/lib/data'
-import { featureDetails } from '@/lib/data'
 import EmailDetails from '@/components/EmailDetails'
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
 import Tagline from '@/components/Tagline'
 import { useEffect, useState } from "react";
 import { db } from '@/firebase';
@@ -34,10 +30,9 @@ type Post = {
   date?: string;
   image?: string;
 };
-const page = () => {
+const Page = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
-
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -180,4 +175,4 @@ className="pt-[120px] -mt-[120px]" >
   )
 }
 
-export default page
+export default Page;

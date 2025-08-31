@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
 import { ShoppingCart, Menu, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -19,7 +18,7 @@ const Navbar = () => {
 
         {/* Center - Navigation */}
         <nav className="hidden md:flex gap-8">
-          {navLinks.map((link,index) => (
+          {navLinks.map((link) => (
             <a
               key={link.id}
               href={`/#${link.id}`}
@@ -48,7 +47,7 @@ const Navbar = () => {
       {isOpen && (
         <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[90%] max-w-[1200px] bg-white rounded-3xl shadow-md p-6 md:hidden">
           <ul className="space-y-4 text-gray-700 font-medium text-center">
-            {navLinks.map((link,index) => (
+            {navLinks.map((link) => (
               <li key={link.id}>
                 <a 
                   key={link.id}
