@@ -2,7 +2,7 @@
 
 import { db } from '@/firebase'
 import { collection, getDocs } from 'firebase/firestore'
-
+import { User } from "firebase/auth";
 import React, { useEffect, useState } from 'react'
 // import Sidebar from './sidebar/page'
 import { auth } from '@/firebase'
@@ -32,7 +32,7 @@ const DashboardPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null); //Make it generic for Firebase Auth (if you’re using Firebase)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

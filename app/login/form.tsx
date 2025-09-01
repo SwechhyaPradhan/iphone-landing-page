@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/firebase'
 import { useRouter } from 'next/navigation'
+import { FirebaseError } from "firebase/app"
 
 const FormPage = () => {
   const router = useRouter()
@@ -21,8 +22,14 @@ const FormPage = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       console.log('Logged in user:', userCredential.user)
       router.push('/dashboard') // redirect after login
-    } catch (err:any) { // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setError(err.message)
+    } catch (err:unknown) {
+      if (err instanceof FirebaseError) {
+        setError(`Firebase error: ${err.message}`)
+      } else if (err instanceof Error) {
+        setError(err.message)
+      } else {
+        setError("An unknown error occurred")
+      }
     }
   }
 

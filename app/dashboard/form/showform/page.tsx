@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from "@/firebase";
 import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import AddFormPage from "@/app/dashboard/form/addform/page";
+import AddFormPage from "@/app/dashboard/form/addform/addformdetail";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
